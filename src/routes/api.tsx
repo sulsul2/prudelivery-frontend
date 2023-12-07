@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-const url = "https://prudelivery.gentlesea-79b322cb.australiaeast.azurecontainerapps.io/";
+const url = "https://prudentialfood.lemonbush-c4ec6395.australiaeast.azurecontainerapps.io/";
 
 export const post = async (
   api: string,

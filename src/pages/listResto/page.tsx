@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import Card from "../../components/card";
 import { MdSwipeUp } from "react-icons/md";
 import Textfield from "../../components/textfield";
+import { useNavigate } from "react-router-dom";
 
 export default function ListResto() {
   const [filteredRooms, setFilteredRooms] = useState<any>([]);
   const [search, setSearch] = useState<string | undefined>("");
+  const navigate = useNavigate();
   const rooms = [
     {
       name: "Restaurant A",
@@ -35,7 +37,7 @@ export default function ListResto() {
     } else {
       setFilteredRooms(rooms);
     }
-  }, [search, rooms]);
+  }, [search]);
 
   return (
     <>
@@ -63,10 +65,11 @@ export default function ListResto() {
                   nama={item.name}
                   rating={item.rating}
                   link={item.photo_url}
+                  onClick={() => navigate("/menu")}
                 />
               );
             })}
-          </div>
+          </div>  
       </div>
     </>
   );

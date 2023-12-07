@@ -2,11 +2,14 @@ import { useState } from "react";
 import Textfield from "../../components/textfield";
 import Button from "../../components/button";
 import { post } from "../../routes/api";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const handleOnLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,6 +20,8 @@ export default function Login() {
         password: password,
       });
       console.log(response);
+      localStorage.setItem('access_token', response.data.access_token);
+      navigate('/');
     } catch (error) {
       console.log(error);
     }finally{
