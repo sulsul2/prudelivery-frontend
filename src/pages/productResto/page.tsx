@@ -6,11 +6,19 @@ import { useEffect, useState } from "react";
 import { getWithAuth } from "../../routes/api";
 import { FormatRupiah } from "@arismun/format-rupiah";
 import Modal from "../../components/modal";
+import ReactSwitch from "react-switch";
+import { FaCheckCircle } from "react-icons/fa";
 
 export default function ProductResto() {
   const [menu, setMenu] = useState<any[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [showModal2, setShowModal2] = useState<boolean>(false);
+  const [hemat, setHemat] = useState<boolean>(false);
+
+  const handleChange = () => {
+    setHemat(!hemat);
+  };
 
   const token = localStorage.getItem("access_token");
 
@@ -19,9 +27,7 @@ export default function ProductResto() {
     try {
       if (token) {
         const response = await getWithAuth(token, "menu");
-        console.log(response);
         setMenu(response.data.data);
-        console.log(response.data.data);
       }
     } catch (error) {
     } finally {
@@ -36,9 +42,72 @@ export default function ProductResto() {
   return (
     <>
       <Modal
+        visible={showModal2}
+        onClose={() => setShowModal2(false)}
+        children={
+          <div className="w-full flex flex-col justify-center items-center text-green-primary gap-2">
+            <FaCheckCircle size={80} />
+            <p className="text-[36px] text-black font-bold mt-4">Order Succees!</p>
+            <p className="text-[24px] text-black font-semibold">Your order will come in 30 Minutes</p>
+          </div>
+        }
+      />
+      <Modal
         visible={showModal}
         onClose={() => setShowModal(false)}
-        children={undefined}
+        children={
+          <div>
+            <p className="text-[36px] text-orange-primary font-bold">
+              Your Cart
+            </p>
+            <div className="w-full flex justify-between items-center mt-6">
+              <p className="text-[24px] font-semibold text-green-primary">
+                Prudent Delivery?
+              </p>
+              <ReactSwitch checked={hemat} onChange={handleChange} />
+            </div>
+            <div className="w-full flex justify-between items-center mt-6 text-[20px] text-green-primary font-semibold">
+              <p className="">Shipping Time</p>
+              <p className="">30 Minutes</p>
+            </div>
+            <div className="w-full flex flex-col gap-4 mt-10">
+              <div className="w-full flex justify-between items-center">
+                <p className="text-[20px] font-semibold">Nasi Goreng X 2</p>
+                <p className="text-[20px] font-semibold">
+                  <FormatRupiah value={30000} />
+                </p>
+              </div>
+              <div className="w-full flex justify-between items-center">
+                <p className="text-[20px] font-semibold">Es Teh X 2</p>
+                <p className="text-[20px] font-semibold">
+                  <FormatRupiah value={10000} />
+                </p>
+              </div>
+              <div className="w-full flex justify-between items-center">
+                <p className="text-[20px] font-semibold">Shipping Price</p>
+                <p className="text-[20px] font-semibold">
+                  <FormatRupiah value={25000} />
+                </p>
+              </div>
+            </div>
+            <div className="w-full flex justify-between items-center mt-12">
+              <p className="text-[24px] text-red-primary font-semibold">
+                Total :{" "}
+                <span className="text-[23px] text-black">
+                  <FormatRupiah value={65000} />
+                </span>
+              </p>
+              <Button
+                type={"button"}
+                text="Checkout"
+                onClick={() => {
+                  setShowModal(false);
+                  setShowModal2(true);
+                }}
+              />
+            </div>
+          </div>
+        }
       />
       <div className="w-full flex flex=col bg-background px-4 pb-10 xl:px-28 pt-[80px] gap-10">
         <div className="w-full flex flex-col gap-12">
@@ -56,7 +125,10 @@ export default function ProductResto() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col items-center justify-center gap-4 text-orange-primary hover:text-orange-secondary cursor-pointer">
+            <div
+              onClick={() => setShowModal(true)}
+              className="flex flex-col items-center justify-center gap-4 text-orange-primary hover:text-orange-secondary cursor-pointer"
+            >
               <MdOutlineShoppingCart size={60} />
               <Button type={"button"} text="Checkout" />
             </div>

@@ -10,6 +10,7 @@ import "./App.css";
 import Login from "./pages/login/page";
 import ListResto from "./pages/listResto/page";
 import ProductResto from "./pages/productResto/page";
+import Register from "./pages/register/page";
 
 const router = createBrowserRouter([{ path: "*", Component: Root }]);
 
@@ -31,6 +32,7 @@ function Root() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       {/* <Route path="*" element={<NotFound />} /> */}
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<ListResto />} />

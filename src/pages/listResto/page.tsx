@@ -41,7 +41,7 @@ export default function ListResto() {
 
   return (
     <>
-      <div className="w-full h-screen bg-[url(./gopud.jpg)] bg-cover">
+      <div className="w-full h-screen bg-[url(https://lelogama.go-jek.com/post_featured_image/menu_gofood_lebihepi.jpg)] bg-cover">
         <div className="w-full flex flex-col items-center justify-center absolute bottom-48 text-white gap-2">
           <MdSwipeUp size={48} />
           <p className="text-[36px] font-semibold">SWIPE UP</p>

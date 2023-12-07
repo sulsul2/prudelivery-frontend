@@ -3,6 +3,7 @@ import Textfield from "../../components/textfield";
 import Button from "../../components/button";
 import { post } from "../../routes/api";
 import { useNavigate } from "react-router-dom";
+import { toastError, toastSuccess } from "../../components/toast";
 
 export default function Login() {
   const [username, setUsername] = useState<string>("");
@@ -21,16 +22,17 @@ export default function Login() {
       });
       console.log(response);
       localStorage.setItem('access_token', response.data.access_token);
+      toastSuccess("Login successfully");
       navigate('/');
     } catch (error) {
-      console.log(error);
+      toastError("Login failed. Please try again")
     }finally{
       setIsLoading(false);
     }
   };
   return (
     <>
-      <div className="flex h-screen w-full flex-col justify-center bg-[url(./background.jpg)] bg-cover bg-center px-5 md:px-[20%] lg:px-[30%]">
+      <div className="flex h-screen w-full flex-col justify-center bg-[url(https://media-cldnry.s-nbcnews.com/image/upload/rockcms/2022-03/plant-based-food-mc-220323-02-273c7b.jpg)] bg-cover bg-center px-5 md:px-[20%] lg:px-[30%]">
         <form
           onSubmit={(e) => handleOnLogin(e)}
           className="flex h-auto w-full flex-col items-center rounded-3xl bg-mono-white px-8 md:px-16 xl:px-[100px] py-14 gap-6 xl:gap-8"
@@ -62,6 +64,7 @@ export default function Login() {
             placeholder={"Your password"}
             onChange={(val: any) => setPassword(val.target.value)}
           />
+          <p className="text-[20px]">Doesn't have an account? <span className="text-orange-primary cursor-pointer hover:underline" onClick={() => navigate('/register')}>Register</span></p>
           <div>
             <Button
               type="submit"
