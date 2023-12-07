@@ -37,7 +37,7 @@ export default function Login() {
         >
           <div className="flex flex-col items-center">
             <img
-              src="./vite.svg"
+              src="./deliver.jpg"
               alt="SiMentel"
               className="w-[100px] bg-cover"
             />

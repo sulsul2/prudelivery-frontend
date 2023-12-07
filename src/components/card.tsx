@@ -1,6 +1,7 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useState } from "react";
 import StaticStarRating from "./star";
 import Button from "./button";
+import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 
 function Card({
   nama,
@@ -9,20 +10,33 @@ function Card({
   button,
   price,
   stok,
+  diskon,
   onClick,
 }: {
   nama: string;
   rating: number;
   link: string;
   button?: boolean;
-  price?: string;
-  stok?: number;
+  price?: any;
+  stok: number;
+  diskon?: number;
   onClick?: MouseEventHandler<HTMLDivElement> | undefined;
 }) {
+  const [amount, setAmount] = useState(0);
+
+  const addAmount = () => {
+    setAmount(amount + 1);
+  };
+  const minusAmount = () => {
+    setAmount(amount - 1);
+  };
+
   return (
     <>
       <div
-        className="w-full max-w-[360px] h-fit bg-white hover:bg-mono-light_grey rounded-[20px] shadow-lg px-2 pt-2 pb-5 cursor-pointer relative"
+        className={`w-full max-w-[360px] h-fit bg-white ${
+          button ? "" : "hover:bg-mono-light_grey rounded-[20px]"
+        } shadow-lg px-2 pt-2 pb-5 cursor-pointer relative`}
         onClick={onClick}
       >
         <div className="w-full h-fit flex flex-col items-center justify-between gap-5 px-6">
@@ -36,14 +50,44 @@ function Card({
             <br />
             {button ? (
               <div className="w-full flex justify-between">
-                <p className="font-normal text-[16px]">{price}</p>
+                <p className="font-normal text-[16px]">
+                  {stok < 5 ? (
+                    <p className="">
+                      <span className="line-through">{price}</span>
+                      {diskon}
+                    </p>
+                  ) : (
+                    price
+                  )}
+                </p>
                 <p className="font-normal text-[16px]">Stok: {stok}</p>
               </div>
             ) : (
               <StaticStarRating rating={rating} starSize="100px" />
             )}
           </p>
-          {button && <Button type={"button"} color="secondary" text="Add" />}
+          {button ? (
+            amount > 0 ? (
+              <div className="w-full flex justify-center items-center text-orange-primary gap-4">
+                <div className="" onClick={minusAmount}>
+                  <CiCircleMinus size={32} />
+                </div>
+                <p className="text-[20px]">{amount}</p>
+                <div className="" onClick={addAmount}>
+                  <CiCirclePlus size={32} />
+                </div>
+              </div>
+            ) : (
+              <Button
+                type={"button"}
+                color="secondary"
+                text="Add"
+                onClick={addAmount}
+              />
+            )
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </>

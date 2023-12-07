@@ -17,12 +17,12 @@ export default function ListResto() {
     {
       name: "Restaurant B",
       rating: 2,
-      photo_url: "./mekdi.jpg",
+      photo_url: "https://assets-a1.kompasiana.com/items/album/2022/05/27/whatsapp-image-2022-05-27-at-23-05-58-6290fdf453e2c3770b60a3f2.jpeg",
     },
     {
       name: "Restaurant C",
       rating: 5,
-      photo_url: "./mekdi.jpg",
+      photo_url: "https://www.constructionplusasia.com/wp-content/uploads/2021/09/WP_2817-Edit.jpg",
     },
   ];
 
@@ -66,6 +66,7 @@ export default function ListResto() {
                   rating={item.rating}
                   link={item.photo_url}
                   onClick={() => navigate("/menu")}
+                  stok={10}
                 />
               );
             })}
