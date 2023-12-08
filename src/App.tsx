@@ -11,6 +11,7 @@ import Login from "./pages/login/page";
 import ListResto from "./pages/listResto/page";
 import ProductResto from "./pages/productResto/page";
 import Register from "./pages/register/page";
+import CartProvider from "./contexts/cartContext";
 
 const router = createBrowserRouter([{ path: "*", Component: Root }]);
 
@@ -21,7 +22,12 @@ const ProtectedRoute = () => {
     return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />;
+  return (
+    <CartProvider>
+      {/* <Navbar /> */}
+      <Outlet />
+    </CartProvider>
+  );
 };
 
 export default function App() {
